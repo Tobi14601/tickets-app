@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tobih/Desktop/DEV/private/TicketIO/tickets-app/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.352" />
         <entry key="..\:/Users/tobih/Desktop/DEV/private/TicketIO/tickets-app/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/tobih/Desktop/DEV/private/TicketIO/tickets-app/app/src/main/res/layout/cell_event.xml" value="0.35052083333333334" />
-        <entry key="..\:/Users/tobih/Desktop/DEV/private/TicketIO/tickets-app/app/src/main/res/layout/fragment_event_list.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/tobih/Desktop/DEV/private/TicketIO/tickets-app/app/src/main/res/layout/fragment_event_edit.xml" value="0.35052083333333334" />
+        <entry key="..\:/Users/tobih/Desktop/DEV/private/TicketIO/tickets-app/app/src/main/res/layout/fragment_event_list.xml" value="0.33" />
+        <entry key="..\:/Users/tobih/Desktop/DEV/private/TicketIO/tickets-app/app/src/main/res/menu/menu_edit_event.xml" value="0.35052083333333334" />
       </map>
     </option>
   </component>

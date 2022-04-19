@@ -1,9 +1,18 @@
 <resources>
     <string name="app_name">Tickets</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="event_item_post_format">%1$s, %2$s</string>
     <string name="event_item_tickets_format">%d Tickets</string>
+    <string name="edit_event_title_hint">Titel</string>
+    <string name="edit_event_city_hint">Stadt</string>
+    <string name="edit_event_post_code_hint">Postleitzahl</string>
+    <string name="edit_event_date">Datum</string>
+    <string name="edit_event_date_placeholder">Datum wählen</string>
+    <string name="edit_event_country_hint">Land</string>
+
+    <string name="edit_event_title">Event bearbeiten</string>
+    <string name="create_event_title">Event erstellen</string>
+    <string name="event_edit_menu_title_save">Speichern</string>
 
 </resources>

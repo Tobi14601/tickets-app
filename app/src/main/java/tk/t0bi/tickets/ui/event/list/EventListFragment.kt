@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.androidannotations.annotations.*
 import tk.t0bi.tickets.R
 import tk.t0bi.tickets.TAG
@@ -28,6 +29,9 @@ class EventListFragment : Fragment(), EventSelectedCallback {
     @BindingObject
     protected lateinit var binding: FragmentEventListBinding
 
+    @ViewById(R.id.floatingActionButton)
+    protected lateinit var floatingActionButton: FloatingActionButton
+
     @ViewById(R.id.eventList)
     protected lateinit var eventList: RecyclerView
     private val eventListAdapter: EventListAdapter by lazy {
@@ -44,6 +48,10 @@ class EventListFragment : Fragment(), EventSelectedCallback {
         setupEventsList()
         setupDataBinding()
         viewModel.loadEvents()
+
+        floatingActionButton.setOnClickListener {
+            openCreateEventFragment()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -71,6 +79,10 @@ class EventListFragment : Fragment(), EventSelectedCallback {
         findNavController().navigateSafe(R.id.action_eventListFragment__to_eventEditFragment_, Bundle().apply {
             putParcelable(EventEditFragment.ARG_EDIT_EVENT, event)
         })
+    }
+
+    fun openCreateEventFragment() {
+        findNavController().navigateSafe(R.id.action_eventListFragment__to_eventEditFragment_)
     }
 
 }
