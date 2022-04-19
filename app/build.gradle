@@ -20,9 +20,13 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["useR2": "true"]
+                //arguments = ["useR2": "true"]
             }
         }
+    }
+
+    buildFeatures {
+        dataBinding true
     }
 
     buildTypes {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/eventListFragment_">
+
+    <fragment
+        android:id="@+id/eventListFragment_"
+        android:name="tk.t0bi.tickets.ui.event.list.EventListFragment_"
+        android:label="EventListFragment_"
+        tools:layout="@layout/fragment_event_list"/>
+</navigation>
