@@ -23,10 +23,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:refreshing="@{ eventListViewModel.isLoading }">
+            app:refreshing="@{ eventListViewModel.isLoading }"
+            app:onRefreshListener="@{ () -> eventListViewModel.loadEvents() }">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/eventList"
+                android:paddingTop="6dp"
+                android:paddingBottom="32dp"
+                android:clipToPadding="false"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

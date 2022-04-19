@@ -9,5 +9,18 @@
         android:id="@+id/eventListFragment_"
         android:name="tk.t0bi.tickets.ui.event.list.EventListFragment_"
         android:label="EventListFragment_"
-        tools:layout="@layout/fragment_event_list"/>
+        tools:layout="@layout/fragment_event_list">
+        <action
+            android:id="@+id/action_eventListFragment__to_eventEditFragment_"
+            app:destination="@id/eventEditFragment_"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventEditFragment_"
+        android:name="tk.t0bi.tickets.ui.event.edit.EventEditFragment_"
+        android:label="EventEditFragment_"
+        tools:layout="@layout/fragment_event_edit" />
 </navigation>

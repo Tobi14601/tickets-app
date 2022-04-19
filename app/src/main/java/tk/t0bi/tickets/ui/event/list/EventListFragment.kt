@@ -1,9 +1,13 @@
 package tk.t0bi.tickets.ui.event.list
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.androidannotations.annotations.*
@@ -11,6 +15,8 @@ import tk.t0bi.tickets.R
 import tk.t0bi.tickets.TAG
 import tk.t0bi.tickets.data.EventListItemModel
 import tk.t0bi.tickets.databinding.FragmentEventListBinding
+import tk.t0bi.tickets.extensions.navigateSafe
+import tk.t0bi.tickets.ui.event.edit.EventEditFragment
 import java.util.*
 
 @DataBound
@@ -24,23 +30,29 @@ class EventListFragment : Fragment(), EventSelectedCallback {
 
     @ViewById(R.id.eventList)
     protected lateinit var eventList: RecyclerView
-    private var eventListAdapter: EventListAdapter? = null
+    private val eventListAdapter: EventListAdapter by lazy {
+        EventListAdapter(emptyList(), this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setupViewModelObservers()
+        super.onCreate(savedInstanceState)
+    }
 
     @AfterViews
     fun setup() {
-        setupDataBinding()
-        setupViewModelObservers()
         setupEventsList()
-
-        viewModel.events.value = listOf(EventListItemModel("Test", "Schweinfurt", "97421", "DE", Date(), 12))
+        setupDataBinding()
+        viewModel.loadEvents()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun setupViewModelObservers() {
         this.viewModel.events.observe(this) {
-            eventListAdapter?.events = it
+            Log.d(TAG, "setupViewModelObservers: events changed")
+            eventListAdapter.events = it
             //warning ignored because we reload the entire list and don't have incremental updates
-            eventListAdapter?.notifyDataSetChanged()
+            eventListAdapter.notifyDataSetChanged()
         }
     }
 
@@ -49,7 +61,6 @@ class EventListFragment : Fragment(), EventSelectedCallback {
     }
 
     fun setupEventsList() {
-        eventListAdapter = EventListAdapter(emptyList(), this)
         eventList.adapter = eventListAdapter
         val layoutManager = LinearLayoutManager(context)
         eventList.layoutManager = layoutManager
@@ -57,6 +68,9 @@ class EventListFragment : Fragment(), EventSelectedCallback {
 
     override fun eventSelected(event: EventListItemModel) {
         Log.d(TAG, "eventSelected: $event")
+        findNavController().navigateSafe(R.id.action_eventListFragment__to_eventEditFragment_, Bundle().apply {
+            putParcelable(EventEditFragment.ARG_EDIT_EVENT, event)
+        })
     }
 
 }

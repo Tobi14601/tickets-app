@@ -33,7 +33,7 @@ class EventListCell @JvmOverloads constructor(
     fun bind(model: EventListItemModel) {
         titleTextView.text = model.title
         cityTextView.text = model.city
-        postCodeTextView.text = context.getString(R.string.event_item_post_format, model.city, model.country)
+        postCodeTextView.text = context.getString(R.string.event_item_post_format, model.postCode, model.country)
         dateTextView.text = DateFormat.getDateInstance(DateFormat.MEDIUM).format(model.date)
         ticketsTextView.text = context.getString(R.string.event_item_tickets_format, model.ticketCount)
     }

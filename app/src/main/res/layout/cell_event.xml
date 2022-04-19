@@ -28,6 +28,7 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/labelColor"
                 android:textSize="22sp"
+                android:singleLine="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -35,22 +36,26 @@
 
             <TextView
                 android:id="@+id/cityTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:textSize="18sp"
+                android:singleLine="true"
+                app:layout_constraintEnd_toStartOf="@+id/dateTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleTextView"
                 tools:text="Schweinfurt" />
 
             <TextView
                 android:id="@+id/postCodeTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
                 android:textSize="18sp"
+                android:singleLine="true"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ticketsTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cityTextView"
                 tools:text="97421 DE" />
