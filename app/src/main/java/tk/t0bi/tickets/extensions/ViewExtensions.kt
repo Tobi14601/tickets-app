@@ -17,3 +17,11 @@ fun View.showError(error: Throwable) {
 
     snackBar.show()
 }
+
+fun View.showSnackbar(@StringRes id: Int) {
+    Snackbar.make(this, id, Snackbar.LENGTH_LONG).show()
+}
+
+fun View.showSnackbar(message: String) {
+    Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
+}

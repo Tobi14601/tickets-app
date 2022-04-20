@@ -14,6 +14,7 @@ import tk.t0bi.tickets.R
 import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import tk.t0bi.tickets.databinding.FragmentEventEditBinding
 import tk.t0bi.tickets.extensions.showError
+import tk.t0bi.tickets.extensions.showSnackbar
 import java.text.DateFormat
 import java.util.*
 
@@ -144,10 +145,34 @@ class EventEditFragment : Fragment() {
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, day)
+
+            if (viewModel.editEventLiveDate.value == null && !checkDateValid(calendar.time)) {
+                //We are creating a event and the date is in the past
+                view?.showSnackbar(R.string.error_date_in_past_not_allowed)
+                return@DatePickerDialog
+            }
+
             viewModel.dateLiveData.value = calendar.time
             updateDatePickerButton()
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         dialog.show()
+    }
+
+    fun checkDateValid(date: Date): Boolean {
+        val dateCalendar = Calendar.getInstance()
+        dateCalendar.time = date
+        dateCalendar.set(Calendar.HOUR_OF_DAY, 0)
+        dateCalendar.set(Calendar.MINUTE, 0)
+        dateCalendar.set(Calendar.SECOND, 0)
+        dateCalendar.set(Calendar.MILLISECOND, 0)
+
+        val currentCalendar = Calendar.getInstance()
+        currentCalendar.set(Calendar.HOUR_OF_DAY, 0)
+        currentCalendar.set(Calendar.MINUTE, 0)
+        currentCalendar.set(Calendar.SECOND, 0)
+        currentCalendar.set(Calendar.MILLISECOND, 0)
+
+        return dateCalendar.timeInMillis == currentCalendar.timeInMillis
     }
 
     fun pressedSave() {
@@ -157,7 +182,7 @@ class EventEditFragment : Fragment() {
             return
         }
         if (viewModel.dateLiveData.value == null) {
-            Snackbar.make(requireView(), R.string.error_missing_date, Snackbar.LENGTH_LONG).show()
+            view?.showSnackbar(R.string.error_missing_date)
             return
         }
 

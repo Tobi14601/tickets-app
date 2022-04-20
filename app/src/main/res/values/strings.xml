@@ -17,6 +17,8 @@
 
     <string name="error_missing_field">Diese Feld muss ausgefüllt werden</string>
     <string name="error_missing_date">Bitte wähle ein Datum</string>
+    <string name="error_date_in_past_not_allowed">Ein Datum, welches in der Vergangenheit liegt ist nicht erlaubt</string>
+
     <string name="error_gernal">Ein Fehler ist aufgetreten bitte versuche es erneut</string>
     <string name="error_invalid_data">Die angegebenen Daten sind nicht gültig</string>
     <string name="error_not_found">Die gesuchten Daten wurden nicht gefunden</string>
