@@ -1,6 +1,6 @@
 package tk.t0bi.tickets.ui.event.list
 
-import tk.t0bi.tickets.data.EventListItemModel
+import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 
 interface EventSelectedCallback {
 

@@ -7,7 +7,7 @@ import android.widget.TextView
 import org.androidannotations.annotations.EViewGroup
 import org.androidannotations.annotations.ViewById
 import tk.t0bi.tickets.R
-import tk.t0bi.tickets.data.EventListItemModel
+import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import java.text.DateFormat
 
 @EViewGroup(R.layout.cell_event)

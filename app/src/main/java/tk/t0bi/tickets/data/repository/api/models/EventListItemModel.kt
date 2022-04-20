@@ -1,4 +1,4 @@
-package tk.t0bi.tickets.data
+package tk.t0bi.tickets.data.repository.api.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

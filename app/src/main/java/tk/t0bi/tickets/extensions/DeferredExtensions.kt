@@ -1,6 +1,5 @@
 package tk.t0bi.tickets.extensions
 
-import com.google.gson.JsonArray
 import nl.komponents.kovenant.Deferred
 import retrofit2.Response
 import java.lang.RuntimeException
@@ -24,7 +23,7 @@ inline fun <V, T> Deferred<V, Exception>.handleMapped(
             this.reject(exception)
         }
     } ?: run {
-        this.reject(RuntimeException("No Body Received"))
+        this.reject(response.createException())
     }
 }
 

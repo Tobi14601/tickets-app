@@ -2,7 +2,7 @@ package tk.t0bi.tickets.ui.event.list
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tk.t0bi.tickets.data.EventListItemModel
+import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import tk.t0bi.tickets.extensions.setListLayoutParams
 
 final class EventListAdapter(var events: List<EventListItemModel>, private val callback: EventSelectedCallback) :

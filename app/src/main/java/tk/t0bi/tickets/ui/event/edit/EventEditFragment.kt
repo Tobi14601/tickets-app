@@ -1,22 +1,23 @@
 package tk.t0bi.tickets.ui.event.edit
 
 import android.app.DatePickerDialog
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.FragmentArg
-import org.androidannotations.annotations.ViewById
+import com.google.android.material.snackbar.Snackbar
+import org.androidannotations.annotations.*
 import tk.t0bi.tickets.R
-import tk.t0bi.tickets.TAG
-import tk.t0bi.tickets.data.EventListItemModel
+import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
+import tk.t0bi.tickets.databinding.FragmentEventEditBinding
+import tk.t0bi.tickets.extensions.showError
 import java.text.DateFormat
 import java.util.*
 
+@DataBound
 @EFragment(R.layout.fragment_event_edit)
 class EventEditFragment : Fragment() {
 
@@ -24,7 +25,10 @@ class EventEditFragment : Fragment() {
         const val ARG_EDIT_EVENT = "event"
     }
 
-    var event: EventListItemModel? = null
+    private val viewModel: EventEditViewModel by viewModels()
+
+    @BindingObject
+    protected lateinit var binding: FragmentEventEditBinding
 
     @ViewById(R.id.toolbar)
     protected lateinit var toolbar: Toolbar
@@ -44,29 +48,65 @@ class EventEditFragment : Fragment() {
     @ViewById(R.id.countryEditText)
     protected lateinit var countryEditText: EditText
 
-    private var selectedDate: Date? = null
+    var observersSetup = false
 
     @FragmentArg(ARG_EDIT_EVENT)
     fun setEventArg(event: EventListItemModel) {
-        this.event = event
-        this.selectedDate = event.date
+        viewModel.editEventLiveDate.value = event
+        viewModel.cityLiveData.value = event.city
+        viewModel.countryLiveData.value = event.country
+        viewModel.dateLiveData.value = event.date
+        viewModel.postCodeLiveData.value = event.postCode
+        viewModel.titleLiveData.value = event.title
     }
 
     @AfterViews
     fun setup() {
         setupMenu()
-        fillFromEditEvent()
-        toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+        setupDataBinding()
+        setupButtons()
+        setupViewModelObservers()
+        updateDatePickerButton()
+    }
+
+    fun setupViewModelObservers() {
+        if (observersSetup) {
+            updateDatePickerButton()
+            return
         }
+        observersSetup = true
+
+        viewModel.dateLiveData.observe(this) {
+            updateDatePickerButton()
+        }
+
+        viewModel.saveCompleteLiveData.observe(this) {
+            it.getContentIfNotHandledOrReturnNull()?.let {
+                findNavController().popBackStack()
+            }
+        }
+
+        viewModel.errorLiveData.observe(this) {
+            it.getContentIfNotHandledOrReturnNull()?.let { error ->
+                view?.showError(error)
+            }
+        }
+    }
+
+    fun setupButtons() {
         dateButton.setOnClickListener {
             openDatePicker()
         }
     }
 
+    fun setupDataBinding() {
+        binding.eventEditViewModel = viewModel
+        binding.lifecycleOwner = this
+    }
+
     fun setupMenu() {
         toolbar.inflateMenu(R.menu.menu_edit_event)
-        if (event == null) {
+        if (viewModel.editEventLiveDate.value == null) {
             toolbar.setTitle(R.string.create_event_title)
         } else {
             toolbar.setTitle(R.string.edit_event_title)
@@ -75,26 +115,20 @@ class EventEditFragment : Fragment() {
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.save -> {
-                    //TODO save
+                    pressedSave()
                     true
                 }
                 else -> false
             }
         }
-    }
 
-    fun fillFromEditEvent() {
-        event?.let {
-            titleEditText.setText(it.title)
-            cityEditText.setText(it.city)
-            postCodeEditText.setText(it.postCode)
-            countryEditText.setText(it.country)
-            updateDatePickerButton()
+        toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
     fun updateDatePickerButton() {
-        selectedDate?.let {
+        viewModel.dateLiveData.value?.let {
             dateButton.text = DateFormat.getDateInstance(DateFormat.MEDIUM).format(it)
         } ?: run {
             dateButton.setText(R.string.edit_event_date_placeholder)
@@ -102,22 +136,48 @@ class EventEditFragment : Fragment() {
     }
 
     fun openDatePicker() {
-        selectedDate?.let {
-
-        }
-
-        val date = selectedDate ?: Date()
+        val date = viewModel.dateLiveData.value ?: Date()
 
         val calendar = Calendar.getInstance()
         calendar.time = date
-        val dialog = DatePickerDialog(requireContext(), { datePicker, year, month, day ->
+        val dialog = DatePickerDialog(requireContext(), { _, year, month, day ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, day)
-            selectedDate = calendar.time
+            viewModel.dateLiveData.value = calendar.time
             updateDatePickerButton()
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         dialog.show()
+    }
+
+    fun pressedSave() {
+        if (viewModel.titleLiveData.value.isNullOrBlank()) {
+            titleEditText.error = getString(R.string.error_missing_field)
+            titleEditText.requestFocus()
+            return
+        }
+        if (viewModel.dateLiveData.value == null) {
+            Snackbar.make(requireView(), R.string.error_missing_date, Snackbar.LENGTH_LONG).show()
+            return
+        }
+
+        if (viewModel.cityLiveData.value.isNullOrBlank()) {
+            cityEditText.error = getString(R.string.error_missing_field)
+            cityEditText.requestFocus()
+            return
+        }
+        if (viewModel.postCodeLiveData.value.isNullOrBlank()) {
+            postCodeEditText.error = getString(R.string.error_missing_field)
+            postCodeEditText.requestFocus()
+            return
+        }
+        if (viewModel.countryLiveData.value.isNullOrBlank()) {
+            countryEditText.error = getString(R.string.error_missing_field)
+            countryEditText.requestFocus()
+            return
+        }
+
+        viewModel.saveEvent()
     }
 
 }

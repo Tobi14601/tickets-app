@@ -3,10 +3,8 @@ package tk.t0bi.tickets.ui.event.list
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +12,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.androidannotations.annotations.*
 import tk.t0bi.tickets.R
 import tk.t0bi.tickets.TAG
-import tk.t0bi.tickets.data.EventListItemModel
+import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import tk.t0bi.tickets.databinding.FragmentEventListBinding
 import tk.t0bi.tickets.extensions.navigateSafe
+import tk.t0bi.tickets.extensions.showError
 import tk.t0bi.tickets.ui.event.edit.EventEditFragment
-import java.util.*
 
 @DataBound
 @EFragment(R.layout.fragment_event_list)
@@ -38,8 +36,9 @@ class EventListFragment : Fragment(), EventSelectedCallback {
         EventListAdapter(emptyList(), this)
     }
 
+    var setupObservers = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        setupViewModelObservers()
         super.onCreate(savedInstanceState)
     }
 
@@ -48,19 +47,28 @@ class EventListFragment : Fragment(), EventSelectedCallback {
         setupEventsList()
         setupDataBinding()
         viewModel.loadEvents()
+        setupViewModelObservers()
 
         floatingActionButton.setOnClickListener {
             openCreateEventFragment()
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setupViewModelObservers() {
-        this.viewModel.events.observe(this) {
-            Log.d(TAG, "setupViewModelObservers: events changed")
-            eventListAdapter.events = it
-            //warning ignored because we reload the entire list and don't have incremental updates
-            eventListAdapter.notifyDataSetChanged()
+        if (setupObservers) {
+            updateEventList()
+            return
+        }
+        setupObservers = true
+
+        viewModel.events.observe(this) {
+            updateEventList()
+        }
+
+        viewModel.errorLiveData.observe(this) {
+            it.getContentIfNotHandledOrReturnNull()?.let { error ->
+                view?.showError(error)
+            }
         }
     }
 
@@ -72,6 +80,15 @@ class EventListFragment : Fragment(), EventSelectedCallback {
         eventList.adapter = eventListAdapter
         val layoutManager = LinearLayoutManager(context)
         eventList.layoutManager = layoutManager
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateEventList() {
+        viewModel.events.value?.let {
+            eventListAdapter.events = it
+            //warning ignored because we reload the entire list and don't have incremental updates
+            eventListAdapter.notifyDataSetChanged()
+        }
     }
 
     override fun eventSelected(event: EventListItemModel) {

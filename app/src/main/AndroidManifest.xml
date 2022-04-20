@@ -15,6 +15,7 @@
         android:theme="@style/Theme.Tickets">
         <activity
             android:name=".MainActivity_"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

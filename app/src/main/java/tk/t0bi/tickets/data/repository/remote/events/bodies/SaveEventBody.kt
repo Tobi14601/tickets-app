@@ -1,12 +1,10 @@
-package tk.t0bi.tickets.data.repository.remote.events.responses
+package tk.t0bi.tickets.data.repository.remote.events.bodies
 
 import com.google.gson.annotations.SerializedName
+import tk.t0bi.tickets.data.repository.api.models.SaveEventModel
 import java.util.*
 
-data class GetAllEventsDto(
-    @SerializedName("id")
-    val id: Long,
-
+data class SaveEventDto(
     @SerializedName("title")
     val title: String,
 
@@ -14,13 +12,12 @@ data class GetAllEventsDto(
     val date: Date,
 
     @SerializedName("city")
-    val city: GetAllEventsCityDto,
+    val city: SaveEventCityDto
+) {
+    constructor(model: SaveEventModel) : this(model.title, model.date, SaveEventCityDto(model.city, model.postCode, model.country))
+}
 
-    @SerializedName("totalTickets")
-    val totalTickets: Int
-)
-
-data class GetAllEventsCityDto(
+data class SaveEventCityDto(
     @SerializedName("name")
     val name: String,
 
@@ -30,3 +27,4 @@ data class GetAllEventsCityDto(
     @SerializedName("country")
     val country: String
 )
+
