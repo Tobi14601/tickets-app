@@ -41,4 +41,16 @@ class RemoteEventsRepository: EventsRepository {
 
         return deferred
     }
+
+    override fun deleteEvent(eventId: Long): Deferred<Long, Exception> {
+        val deferred = deferred<Long, Exception>()
+
+        task {
+            RetrofitServiceLocator.eventsRepository.deleteEvent(eventId).execute()
+        }.handleMapped(deferred) {
+            it.id
+        }
+
+        return deferred
+    }
 }

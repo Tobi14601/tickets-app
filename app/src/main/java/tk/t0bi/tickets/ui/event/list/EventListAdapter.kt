@@ -1,7 +1,9 @@
 package tk.t0bi.tickets.ui.event.list
 
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import tk.t0bi.tickets.R
 import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import tk.t0bi.tickets.extensions.setListLayoutParams
 
@@ -32,8 +34,30 @@ class EventListViewHolder(
     init {
         itemView.setOnClickListener {
             event?.let {
-                callback.eventSelected(it)
+                //callback.eventSelected(it)
             }
+        }
+        view.menuButton.setOnClickListener {
+            val popup = PopupMenu(it.context, it)
+            popup.inflate(R.menu.menu_event_list)
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.edit -> {
+                        event?.let { event ->
+                            callback.selectedEditEvent(event)
+                        }
+                        true
+                    }
+                    R.id.delete -> {
+                    event?.let { event ->
+                        callback.selectedDeleteEvent(event)
+                    }
+                    true
+                }
+                    else -> false
+                }
+            }
+            popup.show()
         }
     }
 

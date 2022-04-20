@@ -6,4 +6,8 @@ interface EventSelectedCallback {
 
     fun eventSelected(event: EventListItemModel)
 
+    fun selectedEditEvent(event: EventListItemModel)
+
+    fun selectedDeleteEvent(event: EventListItemModel)
+
 }

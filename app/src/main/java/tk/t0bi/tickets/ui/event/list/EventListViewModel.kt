@@ -22,7 +22,6 @@ class EventListViewModel: ViewModel() {
     val errorLiveData = MutableLiveData<Event<Exception>>()
 
     fun loadEvents() {
-        Log.d(TAG, "loadEvents: ")
         isLoading.set(true)
         RepositoryServiceLocator.eventsRepository.getAllEvents().promise.successUi {
             events.value = it
@@ -31,6 +30,18 @@ class EventListViewModel: ViewModel() {
             Log.e(TAG, "loadEvents: Error loading events", it)
             errorLiveData.value = Event(it)
             isLoading.set(false)
+        }
+    }
+
+    fun deleteEvent(event: EventListItemModel) {
+        isLoading.set(true)
+        RepositoryServiceLocator.eventsRepository.deleteEvent(event.id).promise.successUi {
+            isLoading.set(false)
+            loadEvents()
+        }.failUi {
+            Log.e(TAG, "deleteEvent: Error deleting event", it)
+            isLoading.set(false)
+            errorLiveData.value = Event(it)
         }
     }
 

@@ -30,6 +30,9 @@ class EventListCell @JvmOverloads constructor(
     @ViewById(R.id.ticketsTextView)
     protected lateinit var ticketsTextView: TextView
 
+    @ViewById(R.id.menuButton)
+    lateinit var menuButton: TextView
+
     fun bind(model: EventListItemModel) {
         titleTextView.text = model.title
         cityTextView.text = model.city

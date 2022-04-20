@@ -11,4 +11,6 @@ interface EventsRepository {
 
     fun saveEvent(event: SaveEventModel): Deferred<Long, Exception>
 
+    fun deleteEvent(eventId: Long): Deferred<Long, Exception>
+
 }

@@ -12,12 +12,19 @@ interface RetrofitEventsRepository {
     fun getAllEvents(): Call<Array<GetAllEventsDto>>
 
     @POST("event")
-    fun createEvent(@Body event: SaveEventDto): Call<SaveEventResponseDto>
+    fun createEvent(
+        @Body event: SaveEventDto
+    ): Call<SaveEventResponseDto>
 
     @PUT("event/{eventId}")
     fun updateEvent(
         @Path("eventId") eventId: Long,
         @Body event: SaveEventDto
+    ): Call<SaveEventResponseDto>
+
+    @DELETE("event/{eventId}")
+    fun deleteEvent(
+        @Path("eventId") eventId: Long
     ): Call<SaveEventResponseDto>
 
 }

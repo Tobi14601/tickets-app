@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Tickets</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="button_confirm">JA</string>
+    <string name="button_cancel">Abbrechen</string>
+
+    <string name="event_list_confirm_delete_title">Löschen Bestätigen</string>
+    <string name="event_list_confirm_delete_message">Möchten Sie das Event "%s" wirklich löschen?</string>
 
     <string name="event_item_post_format">%1$s, %2$s</string>
     <string name="event_item_tickets_format">%d Tickets</string>
@@ -23,5 +28,7 @@
     <string name="error_invalid_data">Die angegebenen Daten sind nicht gültig</string>
     <string name="error_not_found">Die gesuchten Daten wurden nicht gefunden</string>
     <string name="error_conflict">Die angegebenen Daten sind bereits vorhanden</string>
+    <string name="delete">Löschen</string>
+    <string name="edit">Bearbeiten</string>
 
 </resources>

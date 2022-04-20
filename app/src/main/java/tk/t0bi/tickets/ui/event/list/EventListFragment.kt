@@ -3,6 +3,7 @@ package tk.t0bi.tickets.ui.event.list
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -93,9 +94,25 @@ class EventListFragment : Fragment(), EventSelectedCallback {
 
     override fun eventSelected(event: EventListItemModel) {
         Log.d(TAG, "eventSelected: $event")
+    }
+
+    override fun selectedEditEvent(event: EventListItemModel) {
         findNavController().navigateSafe(R.id.action_eventListFragment__to_eventEditFragment_, Bundle().apply {
             putParcelable(EventEditFragment.ARG_EDIT_EVENT, event)
         })
+    }
+
+    override fun selectedDeleteEvent(event: EventListItemModel) {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setTitle(R.string.event_list_confirm_delete_title)
+                .setMessage(getString(R.string.event_list_confirm_delete_message, event.title))
+                .setPositiveButton(R.string.button_confirm) { _, _ ->
+                    viewModel.deleteEvent(event)
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .show()
+        }
     }
 
     fun openCreateEventFragment() {
