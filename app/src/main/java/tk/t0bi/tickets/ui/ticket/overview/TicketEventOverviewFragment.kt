@@ -2,6 +2,7 @@ package tk.t0bi.tickets.ui.ticket.overview
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -128,6 +129,11 @@ class TicketEventOverviewFragment : Fragment(), TicketSelectedCallback {
     fun pressedAddTicket() {
         findNavController().navigateSafe(
             R.id.action_ticketEventOverviewFragment__to_editTicketFragment_,
+            Bundle().apply {
+                viewModel.eventLiveData.value?.let {
+                    putParcelable(EditTicketFragment.ARG_EVENT, it)
+                }
+            }
         )
     }
 
@@ -135,12 +141,24 @@ class TicketEventOverviewFragment : Fragment(), TicketSelectedCallback {
         findNavController().navigateSafe(
             R.id.action_ticketEventOverviewFragment__to_editTicketFragment_,
             Bundle().apply {
+                viewModel.eventLiveData.value?.let {
+                    putParcelable(EditTicketFragment.ARG_EVENT, it)
+                }
                 putParcelable(EditTicketFragment.ARG_TICKET, ticket)
             })
     }
 
     override fun deleteSelected(ticket: TicketModel) {
-        TODO("Not yet implemented")
+        context?.let {
+            AlertDialog.Builder(it)
+                .setTitle(R.string.event_overview_confirm_delete_title)
+                .setMessage(getString(R.string.event_overview_confirm_delete_message, ticket.firstName, ticket.lastName))
+                .setPositiveButton(R.string.button_confirm) { _, _ ->
+                    viewModel.deleteTicket(ticket)
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .show()
+        }
     }
 
 }

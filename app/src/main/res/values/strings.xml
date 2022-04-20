@@ -4,8 +4,8 @@
     <string name="button_confirm">JA</string>
     <string name="button_cancel">Abbrechen</string>
 
-    <string name="event_list_confirm_delete_title">Löschen Bestätigen</string>
-    <string name="event_list_confirm_delete_message">Möchten Sie das Event "%s" wirklich löschen?</string>
+    <string name="event_list_confirm_delete_title">Löschen bestätigen</string>
+    <string name="event_list_confirm_delete_message">Möchten Sie das Event \"%s\" wirklich löschen?</string>
 
     <string name="event_item_post_format">%1$s, %2$s</string>
     <string name="event_item_tickets_format">%d Tickets</string>
@@ -50,5 +50,9 @@
 
     <string name="edit_ticket_title_create">Ticket erstellen</string>
     <string name="edit_ticket_title_edit">Ticket bearbeiten</string>
+
+
+    <string name="event_overview_confirm_delete_title">Löschen bestätigen</string>
+    <string name="event_overview_confirm_delete_message">Möchten Sie das Ticket von \"%1$s %2$s\" wirklich löschen?</string>
 
 </resources>

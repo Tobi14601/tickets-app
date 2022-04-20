@@ -1,5 +1,6 @@
 package tk.t0bi.tickets.ui.ticket.edit
 
+import android.media.metrics.Event
 import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import org.androidannotations.annotations.*
 import tk.t0bi.tickets.R
+import tk.t0bi.tickets.data.repository.api.models.EventTicketsOverviewModel
 import tk.t0bi.tickets.data.repository.api.models.RepositoryError
 import tk.t0bi.tickets.data.repository.api.models.RepositoryErrorException
 import tk.t0bi.tickets.data.repository.api.models.TicketModel
@@ -23,6 +25,7 @@ class EditTicketFragment : Fragment() {
 
     companion object {
         const val ARG_TICKET = "ticket"
+        const val ARG_EVENT = "event"
         private val BARCODE_REGEX = Pattern.compile("^[a-zA-Z0-9]{0,8}\$")
     }
 
@@ -46,8 +49,17 @@ class EditTicketFragment : Fragment() {
     var observersSetup = false
 
     @FragmentArg(ARG_TICKET)
-    fun setTicketArg(model: TicketModel) {
-        viewModel.initFromTicketModel(model)
+    fun setTicketArg(model: TicketModel?) {
+        model?.let {
+            viewModel.initFromTicketModel(it)
+        }
+    }
+
+    @FragmentArg(ARG_EVENT)
+    fun setEventArg(model: EventTicketsOverviewModel?) {
+        model?.let {
+            viewModel.initEventModel(it)
+        }
     }
 
     @AfterViews

@@ -10,10 +10,11 @@ import tk.t0bi.tickets.TAG
 import tk.t0bi.tickets.data.repository.RepositoryServiceLocator
 import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import tk.t0bi.tickets.data.repository.api.models.EventTicketsOverviewModel
+import tk.t0bi.tickets.data.repository.api.models.TicketModel
 import tk.t0bi.tickets.utils.Event
 import java.lang.Exception
 
-class TicketEventOverviewViewModel: ViewModel() {
+class TicketEventOverviewViewModel : ViewModel() {
 
     val isLoading = ObservableBoolean()
     val errorLiveData = MutableLiveData<Event<Exception>>()
@@ -35,6 +36,20 @@ class TicketEventOverviewViewModel: ViewModel() {
                 errorLiveData.value = Event(error)
             }
         }
+    }
+
+    fun deleteTicket(ticket: TicketModel) {
+        val event = eventLiveData.value ?: return
+
+        isLoading.set(true)
+        RepositoryServiceLocator.ticketsRepository.deleteTicket(event.id, ticket.id).promise
+            .successUi {
+                isLoading.set(false)
+                loadEvent()
+            }.failUi {
+                isLoading.set(false)
+                errorLiveData.value = Event(it)
+            }
     }
 
 }

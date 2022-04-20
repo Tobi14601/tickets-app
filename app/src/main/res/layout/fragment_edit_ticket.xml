@@ -62,7 +62,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/edit_ticket_hint_first_name"
-                            android:inputType="text"
+                            android:inputType="textPersonName|textCapWords"
                             android:lines="1"
                             android:text="@={ editTicketViewModel.firstNameLiveData }"/>
 
@@ -85,7 +85,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/edit_ticket_hint_last_name"
-                            android:inputType="text"
+                            android:inputType="textPersonName|textCapWords"
                             android:lines="1"
                             android:text="@={ editTicketViewModel.lastNameLiveData }" />
 
