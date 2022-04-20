@@ -31,12 +31,12 @@ class TicketCell @JvmOverloads constructor(
         nameTextView.text = context.getString(R.string.ticket_cell_name_format, model.firstName, model.lastName)
         barcodeTextView.text = model.barcode
         if (model.available) {
-            availableTextView.setText(R.string.ticket_cell_available)
+            availableTextView.setText(R.string.ticket_available)
         } else {
             val dateString = model.usedDate?.let {
                 DateFormat.getDateInstance(DateFormat.FULL).format(it)
             } ?: ""
-            availableTextView.text = context.getString(R.string.ticket_cell_not_available, dateString)
+            availableTextView.text = context.getString(R.string.ticket_not_available, dateString)
         }
     }
 

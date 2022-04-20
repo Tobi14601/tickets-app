@@ -3,6 +3,7 @@ package tk.t0bi.tickets.data.repository.remote.events
 import retrofit2.Call
 import retrofit2.http.*
 import tk.t0bi.tickets.data.repository.remote.events.bodies.SaveEventDto
+import tk.t0bi.tickets.data.repository.remote.events.responses.EventEntryResultDto
 import tk.t0bi.tickets.data.repository.remote.events.responses.GetAllEventsDto
 import tk.t0bi.tickets.data.repository.remote.events.responses.GetCompleteEventDto
 import tk.t0bi.tickets.data.repository.remote.events.responses.SaveEventResponseDto
@@ -32,5 +33,14 @@ interface RetrofitEventsRepository {
     fun deleteEvent(
         @Path("eventId") eventId: Long
     ): Call<SaveEventResponseDto>
+
+
+    @PATCH("event/{eventId}/entry")
+    fun eventEntry(
+        @Path("eventId") eventId: Long,
+        @Query("barcode") barcode: String
+    ): Call<EventEntryResultDto>
+
+
 
 }

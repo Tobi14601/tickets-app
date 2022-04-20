@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Tickets</string>
 
+    <string name="alert_attention">Achtung</string>
+
     <string name="button_confirm">JA</string>
     <string name="button_cancel">Abbrechen</string>
+    <string name="button_ok">OK</string>
 
     <string name="event_list_confirm_delete_title">Löschen bestätigen</string>
     <string name="event_list_confirm_delete_message">Möchten Sie das Event \"%s\" wirklich löschen?</string>
@@ -22,13 +25,15 @@
     <string name="ticket_edit_menu_title_save">Speichern</string>
 
     <string name="ticket_cell_name_format">%1$s %2$s</string>
-    <string name="ticket_cell_available">Nicht genutzt</string>
-    <string name="ticket_cell_not_available">Genutzt am %s</string>
+    <string name="ticket_available">Nicht genutzt</string>
+    <string name="ticket_not_available">Genutzt am %s</string>
 
     <string name="error_missing_field">Diese Feld muss ausgefüllt werden</string>
     <string name="error_missing_date">Bitte wähle ein Datum</string>
+    <string name="error_entry_is_only_at_event_date_allowed">Eingang zum Event ist nur am Tag des Events möglich</string>
     <string name="error_date_in_past_not_allowed">Ein Datum, welches in der Vergangenheit liegt ist nicht erlaubt</string>
-    <string name="error_barcode_invalid">Der eingegebene Barcode ist nicht gültig. (a–zA-Z0-9 8 Stellen)</string>
+    <string name="error_barcode_invalid">Der eingegebene Barcode ist nicht gültig. (a–zA-Z0-9 1-8 Stellen)</string>
+    <string name="error_invalid_barcode_scanned">Der gescannte Barcode ist nicht gültig</string>
 
     <string name="error_gernal">Ein Fehler ist aufgetreten bitte versuche es erneut</string>
     <string name="error_invalid_data">Die angegebenen Daten sind nicht gültig</string>
@@ -51,8 +56,18 @@
     <string name="edit_ticket_title_create">Ticket erstellen</string>
     <string name="edit_ticket_title_edit">Ticket bearbeiten</string>
 
-
     <string name="event_overview_confirm_delete_title">Löschen bestätigen</string>
     <string name="event_overview_confirm_delete_message">Möchten Sie das Ticket von \"%1$s %2$s\" wirklich löschen?</string>
+
+    <string name="entry_result_allow_entry">Eintritt gewährt</string>
+    <string name="entry_result_deny_invalid_code">Dem Code wurde kein Ticket zugewiesen</string>
+    <string name="entry_result_deny_already_entered">Dieses Ticket wurde bereits verwendet</string>
+    <string name="entry_result_deny_wrong_day">Das Event findet heute nicht stadt</string>
+    <string name="entry_result_unknown">Unbekannt</string>
+
+    <string name="entry_result_allowed">Zugang gewährt</string>
+    <string name="entry_result_denied">Zugang verweigert</string>
+    <string name="entry_result_message_ticket">Grund: %1$s\n\nTicket:\n%2$s %3$s\n%4$s</string>
+    <string name="entry_result_message_no_ticket">Grund: %s</string>
 
 </resources>

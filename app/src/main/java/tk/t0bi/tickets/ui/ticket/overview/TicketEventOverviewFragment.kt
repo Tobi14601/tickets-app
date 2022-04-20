@@ -1,7 +1,10 @@
 package tk.t0bi.tickets.ui.ticket.overview
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -9,17 +12,20 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
 import org.androidannotations.annotations.*
+import tk.t0bi.tickets.BARCODE_REGEX
 import tk.t0bi.tickets.R
-import tk.t0bi.tickets.data.repository.api.models.CityModel
-import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
-import tk.t0bi.tickets.data.repository.api.models.EventTicketsOverviewModel
-import tk.t0bi.tickets.data.repository.api.models.TicketModel
+import tk.t0bi.tickets.TAG
+import tk.t0bi.tickets.data.repository.api.models.*
 import tk.t0bi.tickets.databinding.FragmentTicketEventOverviewBinding
 import tk.t0bi.tickets.extensions.navigateSafe
 import tk.t0bi.tickets.extensions.showError
 import tk.t0bi.tickets.ui.ticket.edit.EditTicketFragment
 import tk.t0bi.tickets.ui.ticket.edit.EditTicketFragment_
+import java.text.DateFormat
 import java.util.*
 
 @DataBound
@@ -41,7 +47,16 @@ class TicketEventOverviewFragment : Fragment(), TicketSelectedCallback {
     @ViewById(R.id.toolbar)
     protected lateinit var toolbar: Toolbar
 
+    @ViewById(R.id.floatingActionButton)
+    protected lateinit var floatingActionButton: FloatingActionButton
+
     var observersSetup = false
+
+    val scannerResultLauncher = registerForActivityResult(ScanContract()) { result ->
+        result.contents?.let {
+            gotScanResult(it)
+        }
+    }
 
     val adapter by lazy {
         TicketEventAdapter(
@@ -68,6 +83,10 @@ class TicketEventOverviewFragment : Fragment(), TicketSelectedCallback {
         setupViewModelObservers()
         setupContentList()
         viewModel.loadEvent()
+
+        floatingActionButton.setOnClickListener {
+            pressedScan()
+        }
     }
 
     fun setupDataBinding() {
@@ -114,6 +133,12 @@ class TicketEventOverviewFragment : Fragment(), TicketSelectedCallback {
                 view?.showError(error)
             }
         }
+
+        viewModel.entryLiveData.observe(this) {
+            it.getContentIfNotHandledOrReturnNull()?.let { model ->
+                showEntryResult(model)
+            }
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -152,11 +177,88 @@ class TicketEventOverviewFragment : Fragment(), TicketSelectedCallback {
         context?.let {
             AlertDialog.Builder(it)
                 .setTitle(R.string.event_overview_confirm_delete_title)
-                .setMessage(getString(R.string.event_overview_confirm_delete_message, ticket.firstName, ticket.lastName))
+                .setMessage(
+                    getString(
+                        R.string.event_overview_confirm_delete_message,
+                        ticket.firstName,
+                        ticket.lastName
+                    )
+                )
                 .setPositiveButton(R.string.button_confirm) { _, _ ->
                     viewModel.deleteTicket(ticket)
                 }
                 .setNegativeButton(R.string.button_cancel, null)
+                .show()
+        }
+    }
+
+    fun pressedScan() {
+        if (!isEntryAllowedToday()) {
+            context?.let {
+                AlertDialog.Builder(it)
+                    .setTitle(R.string.alert_attention)
+                    .setMessage(R.string.error_entry_is_only_at_event_date_allowed)
+                    .setPositiveButton(R.string.button_ok, null)
+                    .show()
+            }
+            return
+        }
+
+        scannerResultLauncher.launch(ScanOptions())
+    }
+
+    fun gotScanResult(code: String) {
+        if (!BARCODE_REGEX.matcher(code).matches()) {
+            context?.let {
+                AlertDialog.Builder(it)
+                    .setTitle(R.string.alert_attention)
+                    .setMessage(R.string.error_invalid_barcode_scanned)
+                    .setPositiveButton(R.string.button_ok, null)
+                    .show()
+            }
+            return
+        }
+
+        viewModel.handleScannedBarcode(code)
+    }
+
+    fun isEntryAllowedToday(): Boolean {
+        val event = viewModel.eventLiveData.value ?: return false
+
+        val dateCalendar = Calendar.getInstance()
+        dateCalendar.time = event.date
+        dateCalendar.set(Calendar.HOUR_OF_DAY, 0)
+        dateCalendar.set(Calendar.MINUTE, 0)
+        dateCalendar.set(Calendar.SECOND, 0)
+        dateCalendar.set(Calendar.MILLISECOND, 0)
+
+        val todayCalendar = Calendar.getInstance()
+        todayCalendar.set(Calendar.HOUR_OF_DAY, 0)
+        todayCalendar.set(Calendar.MINUTE, 0)
+        todayCalendar.set(Calendar.SECOND, 0)
+        todayCalendar.set(Calendar.MILLISECOND, 0)
+
+        return dateCalendar.time == todayCalendar.time
+    }
+
+    fun showEntryResult(model: EventEntryResultModel) {
+        context?.let {
+            val message = model.ticket?.let { ticket ->
+                getString(
+                    R.string.entry_result_message_ticket,
+                    getString(model.result.message),
+                    ticket.firstName,
+                    ticket.lastName,
+                    if (ticket.available) getString(R.string.ticket_available) else getString(
+                        R.string.ticket_not_available,
+                        ticket.usedDate?.let { date ->
+                            DateFormat.getDateInstance(DateFormat.FULL).format(date)
+                        } ?: ""))
+            } ?: getString(R.string.entry_result_message_no_ticket, getString(model.result.message))
+            AlertDialog.Builder(it)
+                .setTitle(if (model.result == EventEntryResult.ALLOW_ENTRY) R.string.entry_result_allowed else R.string.entry_result_denied)
+                .setMessage(message)
+                .setPositiveButton(R.string.button_ok, null)
                 .show()
         }
     }

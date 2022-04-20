@@ -51,6 +51,9 @@ allOpen {
 
 dependencies {
 
+    //ZXing
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+
     //Country Picker
     implementation 'com.hbb20:ccp:2.6.0'
 

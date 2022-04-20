@@ -3,10 +3,8 @@ package tk.t0bi.tickets.data.repository.remote.events
 import nl.komponents.kovenant.Deferred
 import nl.komponents.kovenant.deferred
 import nl.komponents.kovenant.task
-import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import tk.t0bi.tickets.data.repository.api.EventsRepository
-import tk.t0bi.tickets.data.repository.api.models.EventTicketsOverviewModel
-import tk.t0bi.tickets.data.repository.api.models.SaveEventModel
+import tk.t0bi.tickets.data.repository.api.models.*
 import tk.t0bi.tickets.data.repository.remote.RetrofitServiceLocator
 import tk.t0bi.tickets.data.repository.remote.events.bodies.SaveEventDto
 import tk.t0bi.tickets.extensions.handleMapped
@@ -62,6 +60,18 @@ class RemoteEventsRepository: EventsRepository {
             RetrofitServiceLocator.eventsRepository.deleteEvent(eventId).execute()
         }.handleMapped(deferred) {
             it.id
+        }
+
+        return deferred
+    }
+
+    override fun entry(eventId: Long, code: String): Deferred<EventEntryResultModel, Exception> {
+        val deferred = deferred<EventEntryResultModel, Exception>()
+
+        task {
+            RetrofitServiceLocator.eventsRepository.eventEntry(eventId, code).execute()
+        }.handleMapped(deferred) {
+            it.toEventEntryResultModel()
         }
 
         return deferred

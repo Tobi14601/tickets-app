@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import org.androidannotations.annotations.*
+import tk.t0bi.tickets.BARCODE_REGEX
 import tk.t0bi.tickets.R
 import tk.t0bi.tickets.data.repository.api.models.EventTicketsOverviewModel
 import tk.t0bi.tickets.data.repository.api.models.RepositoryError
@@ -26,7 +27,6 @@ class EditTicketFragment : Fragment() {
     companion object {
         const val ARG_TICKET = "ticket"
         const val ARG_EVENT = "event"
-        private val BARCODE_REGEX = Pattern.compile("^[a-zA-Z0-9]{0,8}\$")
     }
 
     private val viewModel: EditTicketViewModel by viewModels()

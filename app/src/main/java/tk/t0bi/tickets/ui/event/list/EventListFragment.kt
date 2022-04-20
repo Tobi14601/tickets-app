@@ -40,10 +40,6 @@ class EventListFragment : Fragment(), EventSelectedCallback {
 
     var setupObservers = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     @AfterViews
     fun setup() {
         setupEventsList()
