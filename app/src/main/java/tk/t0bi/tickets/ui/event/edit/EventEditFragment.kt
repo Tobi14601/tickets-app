@@ -54,11 +54,11 @@ class EventEditFragment : Fragment() {
     @FragmentArg(ARG_EDIT_EVENT)
     fun setEventArg(event: EventListItemModel) {
         viewModel.editEventLiveDate.value = event
-        viewModel.cityLiveData.value = event.city
-        viewModel.countryLiveData.value = event.country
-        viewModel.dateLiveData.value = event.date
-        viewModel.postCodeLiveData.value = event.postCode
         viewModel.titleLiveData.value = event.title
+        viewModel.dateLiveData.value = event.date
+        viewModel.cityLiveData.value = event.city.name
+        viewModel.countryLiveData.value = event.city.country
+        viewModel.postCodeLiveData.value = event.city.postCode
     }
 
     @AfterViews
@@ -172,7 +172,7 @@ class EventEditFragment : Fragment() {
         currentCalendar.set(Calendar.SECOND, 0)
         currentCalendar.set(Calendar.MILLISECOND, 0)
 
-        return dateCalendar.timeInMillis == currentCalendar.timeInMillis
+        return dateCalendar.timeInMillis >= currentCalendar.timeInMillis
     }
 
     fun pressedSave() {

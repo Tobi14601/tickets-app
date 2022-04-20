@@ -17,10 +17,35 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_eventListFragment__to_ticketEventOverviewFragment_"
+            app:destination="@id/ticketEventOverviewFragment_"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right"/>
     </fragment>
     <fragment
         android:id="@+id/eventEditFragment_"
         android:name="tk.t0bi.tickets.ui.event.edit.EventEditFragment_"
         android:label="EventEditFragment_"
         tools:layout="@layout/fragment_event_edit" />
+    <fragment
+        android:id="@+id/ticketEventOverviewFragment_"
+        android:name="tk.t0bi.tickets.ui.ticket.overview.TicketEventOverviewFragment_"
+        android:label="TicketEventOverviewFragment_"
+        tools:layout="@layout/fragment_ticket_event_overview" >
+        <action
+            android:id="@+id/action_ticketEventOverviewFragment__to_editTicketFragment_"
+            app:destination="@id/editTicketFragment_"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/editTicketFragment_"
+        android:name="tk.t0bi.tickets.ui.ticket.edit.EditTicketFragment_"
+        android:label="EditTicketFragment_"
+        tools:layout="@layout/fragment_edit_ticket"/>
 </navigation>

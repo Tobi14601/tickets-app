@@ -18,6 +18,7 @@ import tk.t0bi.tickets.databinding.FragmentEventListBinding
 import tk.t0bi.tickets.extensions.navigateSafe
 import tk.t0bi.tickets.extensions.showError
 import tk.t0bi.tickets.ui.event.edit.EventEditFragment
+import tk.t0bi.tickets.ui.ticket.overview.TicketEventOverviewFragment
 
 @DataBound
 @EFragment(R.layout.fragment_event_list)
@@ -93,7 +94,9 @@ class EventListFragment : Fragment(), EventSelectedCallback {
     }
 
     override fun eventSelected(event: EventListItemModel) {
-        Log.d(TAG, "eventSelected: $event")
+        findNavController().navigateSafe(R.id.action_eventListFragment__to_ticketEventOverviewFragment_, Bundle().apply {
+            putParcelable(TicketEventOverviewFragment.ARG_EVENT, event)
+        })
     }
 
     override fun selectedEditEvent(event: EventListItemModel) {

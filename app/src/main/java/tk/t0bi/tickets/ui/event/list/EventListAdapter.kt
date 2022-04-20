@@ -34,12 +34,12 @@ class EventListViewHolder(
     init {
         itemView.setOnClickListener {
             event?.let {
-                //callback.eventSelected(it)
+                callback.eventSelected(it)
             }
         }
         view.menuButton.setOnClickListener {
             val popup = PopupMenu(it.context, it)
-            popup.inflate(R.menu.menu_event_list)
+            popup.inflate(R.menu.menu_edit_delete)
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.edit -> {

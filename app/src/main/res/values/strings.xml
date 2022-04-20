@@ -19,16 +19,36 @@
     <string name="edit_event_title">Event bearbeiten</string>
     <string name="create_event_title">Event erstellen</string>
     <string name="event_edit_menu_title_save">Speichern</string>
+    <string name="ticket_edit_menu_title_save">Speichern</string>
+
+    <string name="ticket_cell_name_format">%1$s %2$s</string>
+    <string name="ticket_cell_available">Nicht genutzt</string>
+    <string name="ticket_cell_not_available">Genutzt am %s</string>
 
     <string name="error_missing_field">Diese Feld muss ausgefüllt werden</string>
     <string name="error_missing_date">Bitte wähle ein Datum</string>
     <string name="error_date_in_past_not_allowed">Ein Datum, welches in der Vergangenheit liegt ist nicht erlaubt</string>
+    <string name="error_barcode_invalid">Der eingegebene Barcode ist nicht gültig. (a–zA-Z0-9 8 Stellen)</string>
 
     <string name="error_gernal">Ein Fehler ist aufgetreten bitte versuche es erneut</string>
     <string name="error_invalid_data">Die angegebenen Daten sind nicht gültig</string>
     <string name="error_not_found">Die gesuchten Daten wurden nicht gefunden</string>
     <string name="error_conflict">Die angegebenen Daten sind bereits vorhanden</string>
+    <string name="error_duplicate_barcode">Es existiert bereits ein Ticket mit diesem Barcode</string>
+
     <string name="delete">Löschen</string>
     <string name="edit">Bearbeiten</string>
+    <string name="date">Datum</string>
+    <string name="cell_event_header_tickets">Tickets</string>
+
+    <string name="event_overview_menu_add_ticket">Ticket erstellen</string>
+
+    <string name="edit_ticket_hint_barcode_empty">Leer lassen um einen zufälligen Barcode zugeneriern</string>
+    <string name="edit_ticket_hint_barcode">Barcode</string>
+    <string name="edit_ticket_hint_last_name">Nachname</string>
+    <string name="edit_ticket_hint_first_name">Vorname</string>
+
+    <string name="edit_ticket_title_create">Ticket erstellen</string>
+    <string name="edit_ticket_title_edit">Ticket bearbeiten</string>
 
 </resources>

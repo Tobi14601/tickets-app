@@ -5,6 +5,7 @@ import nl.komponents.kovenant.deferred
 import nl.komponents.kovenant.task
 import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import tk.t0bi.tickets.data.repository.api.EventsRepository
+import tk.t0bi.tickets.data.repository.api.models.EventTicketsOverviewModel
 import tk.t0bi.tickets.data.repository.api.models.SaveEventModel
 import tk.t0bi.tickets.data.repository.remote.RetrofitServiceLocator
 import tk.t0bi.tickets.data.repository.remote.events.bodies.SaveEventDto
@@ -19,8 +20,20 @@ class RemoteEventsRepository: EventsRepository {
             RetrofitServiceLocator.eventsRepository.getAllEvents().execute()
         }.handleMapped(deferred) {
             it.map { event ->
-                EventListItemModel(event.id, event.title, event.city.name, event.city.postCode, event.city.country, event.date, event.totalTickets)
+                event.toEventListItemModel()
             }
+        }
+
+        return deferred
+    }
+
+    override fun getCompleteEvent(eventId: Long): Deferred<EventTicketsOverviewModel, Exception> {
+        val deferred = deferred<EventTicketsOverviewModel, Exception>()
+
+        task {
+            RetrofitServiceLocator.eventsRepository.getEvent(eventId).execute()
+        }.handleMapped(deferred) {
+            it.toEventTicketsOverviewModel()
         }
 
         return deferred

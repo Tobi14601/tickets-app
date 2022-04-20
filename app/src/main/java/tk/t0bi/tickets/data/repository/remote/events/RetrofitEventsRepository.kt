@@ -4,12 +4,18 @@ import retrofit2.Call
 import retrofit2.http.*
 import tk.t0bi.tickets.data.repository.remote.events.bodies.SaveEventDto
 import tk.t0bi.tickets.data.repository.remote.events.responses.GetAllEventsDto
+import tk.t0bi.tickets.data.repository.remote.events.responses.GetCompleteEventDto
 import tk.t0bi.tickets.data.repository.remote.events.responses.SaveEventResponseDto
 
 interface RetrofitEventsRepository {
 
     @GET("events")
     fun getAllEvents(): Call<Array<GetAllEventsDto>>
+
+    @GET("event/{eventId}")
+    fun getEvent(
+        @Path("eventId") eventId: Long,
+    ): Call<GetCompleteEventDto>
 
     @POST("event")
     fun createEvent(

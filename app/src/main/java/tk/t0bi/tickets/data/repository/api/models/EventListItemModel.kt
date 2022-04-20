@@ -8,9 +8,7 @@ import java.util.*
 data class EventListItemModel(
     val id: Long,
     val title: String,
-    val city: String,
-    val postCode: String,
-    val country: String,
+    val city: CityModel,
     val date: Date,
     val ticketCount: Int
 ) : Parcelable
