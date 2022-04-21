@@ -11,7 +11,7 @@ import java.util.regex.Pattern
 val BARCODE_REGEX = Pattern.compile("^[a-zA-Z0-9]{0,8}\$")
 
 @EApplication
-class TicketsApp: Application() {
+class TicketsApp : Application() {
 
     override fun onCreate() {
         customStartConfigureKovenant()

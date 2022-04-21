@@ -7,13 +7,12 @@ import androidx.lifecycle.ViewModel
 import nl.komponents.kovenant.ui.failUi
 import nl.komponents.kovenant.ui.successUi
 import tk.t0bi.tickets.TAG
-import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import tk.t0bi.tickets.data.repository.RepositoryServiceLocator
+import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import tk.t0bi.tickets.utils.Event
 import tk.t0bi.tickets.utils.UpdatableLiveData
-import java.lang.Exception
 
-class EventListViewModel: ViewModel() {
+class EventListViewModel : ViewModel() {
 
     val isLoading = ObservableBoolean()
 

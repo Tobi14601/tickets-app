@@ -42,5 +42,4 @@ interface RetrofitEventsRepository {
     ): Call<EventEntryResultDto>
 
 
-
 }

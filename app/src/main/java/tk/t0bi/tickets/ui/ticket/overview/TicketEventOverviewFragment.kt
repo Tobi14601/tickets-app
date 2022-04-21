@@ -1,10 +1,7 @@
 package tk.t0bi.tickets.ui.ticket.overview
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -18,13 +15,11 @@ import com.journeyapps.barcodescanner.ScanOptions
 import org.androidannotations.annotations.*
 import tk.t0bi.tickets.BARCODE_REGEX
 import tk.t0bi.tickets.R
-import tk.t0bi.tickets.TAG
 import tk.t0bi.tickets.data.repository.api.models.*
 import tk.t0bi.tickets.databinding.FragmentTicketEventOverviewBinding
 import tk.t0bi.tickets.extensions.navigateSafe
 import tk.t0bi.tickets.extensions.showError
 import tk.t0bi.tickets.ui.ticket.edit.EditTicketFragment
-import tk.t0bi.tickets.ui.ticket.edit.EditTicketFragment_
 import java.text.DateFormat
 import java.util.*
 

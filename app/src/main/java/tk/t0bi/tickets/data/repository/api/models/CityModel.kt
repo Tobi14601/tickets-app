@@ -8,4 +8,4 @@ data class CityModel(
     val name: String,
     val postCode: String,
     val country: String
-): Parcelable
+) : Parcelable

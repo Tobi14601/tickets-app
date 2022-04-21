@@ -49,11 +49,11 @@ class EventListViewHolder(
                         true
                     }
                     R.id.delete -> {
-                    event?.let { event ->
-                        callback.selectedDeleteEvent(event)
+                        event?.let { event ->
+                            callback.selectedDeleteEvent(event)
+                        }
+                        true
                     }
-                    true
-                }
                     else -> false
                 }
             }

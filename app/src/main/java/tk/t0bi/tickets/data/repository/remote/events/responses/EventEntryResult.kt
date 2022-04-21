@@ -1,7 +1,6 @@
 package tk.t0bi.tickets.data.repository.remote.events.responses
 
 import com.google.gson.annotations.SerializedName
-import tk.t0bi.tickets.R
 import tk.t0bi.tickets.data.repository.api.models.EventEntryResult
 import tk.t0bi.tickets.data.repository.api.models.EventEntryResultModel
 import tk.t0bi.tickets.data.repository.api.models.TicketModel

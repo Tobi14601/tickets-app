@@ -11,7 +11,7 @@ data class EventTicketsOverviewModel(
     val date: Date,
     val city: CityModel,
     val tickets: Array<TicketModel>
-): Parcelable {
+) : Parcelable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

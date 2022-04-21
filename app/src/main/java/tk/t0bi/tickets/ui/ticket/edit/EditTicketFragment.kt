@@ -1,6 +1,5 @@
 package tk.t0bi.tickets.ui.ticket.edit
 
-import android.media.metrics.Event
 import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -14,11 +13,8 @@ import tk.t0bi.tickets.data.repository.api.models.RepositoryError
 import tk.t0bi.tickets.data.repository.api.models.RepositoryErrorException
 import tk.t0bi.tickets.data.repository.api.models.TicketModel
 import tk.t0bi.tickets.databinding.FragmentEditTicketBinding
-import tk.t0bi.tickets.databinding.FragmentTicketEventOverviewBinding
 import tk.t0bi.tickets.extensions.showError
 import tk.t0bi.tickets.extensions.showSnackbar
-import tk.t0bi.tickets.ui.ticket.overview.TicketEventOverviewViewModel
-import java.util.regex.Pattern
 
 @DataBound
 @EFragment(R.layout.fragment_edit_ticket)

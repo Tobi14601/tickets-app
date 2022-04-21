@@ -4,13 +4,15 @@ import nl.komponents.kovenant.Deferred
 import nl.komponents.kovenant.deferred
 import nl.komponents.kovenant.task
 import tk.t0bi.tickets.data.repository.api.EventsRepository
-import tk.t0bi.tickets.data.repository.api.models.*
+import tk.t0bi.tickets.data.repository.api.models.EventEntryResultModel
+import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
+import tk.t0bi.tickets.data.repository.api.models.EventTicketsOverviewModel
+import tk.t0bi.tickets.data.repository.api.models.SaveEventModel
 import tk.t0bi.tickets.data.repository.remote.RetrofitServiceLocator
 import tk.t0bi.tickets.data.repository.remote.events.bodies.SaveEventDto
 import tk.t0bi.tickets.extensions.handleMapped
-import java.lang.Exception
 
-class RemoteEventsRepository: EventsRepository {
+class RemoteEventsRepository : EventsRepository {
     override fun getAllEvents(): Deferred<List<EventListItemModel>, Exception> {
         val deferred = deferred<List<EventListItemModel>, Exception>()
 

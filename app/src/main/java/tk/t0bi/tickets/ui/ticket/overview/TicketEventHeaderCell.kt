@@ -26,7 +26,8 @@ class TicketEventHeaderCell @JvmOverloads constructor(
 
     fun bind(model: EventTicketsOverviewModel) {
         cityTextView.text = model.city.name
-        postCodeTextView.text = context.getString(R.string.event_item_post_format, model.city.postCode, model.city.country)
+        postCodeTextView.text =
+            context.getString(R.string.event_item_post_format, model.city.postCode, model.city.country)
         dateTextView.text = DateFormat.getDateInstance(DateFormat.MEDIUM).format(model.date)
     }
 

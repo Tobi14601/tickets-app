@@ -2,7 +2,6 @@ package tk.t0bi.tickets.extensions
 
 import nl.komponents.kovenant.Deferred
 import retrofit2.Response
-import java.lang.RuntimeException
 
 fun <V> Deferred<V, Exception>.handle(response: Response<V>) {
     response.body()?.let {

@@ -12,4 +12,4 @@ data class TicketModel(
     val lastName: String,
     val available: Boolean,
     val usedDate: Date?
-): Parcelable
+) : Parcelable

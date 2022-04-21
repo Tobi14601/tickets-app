@@ -10,7 +10,10 @@ fun <T> Response<T>.createException(): Exception {
     if (this.body() == null) {
         return this.errorBody()?.let {
             val body = it.string()
-            RepositoryErrorException(errorFromStatusCode(this.code()), body.tryFromJson(ApiErrorResponse::class.java)?.buildMessage() ?: "No message")
+            RepositoryErrorException(
+                errorFromStatusCode(this.code()),
+                body.tryFromJson(ApiErrorResponse::class.java)?.buildMessage() ?: "No message"
+            )
         } ?: run {
             RepositoryErrorException(RepositoryError.UNKNOWN, "No body Received")
         }

@@ -2,7 +2,6 @@ package tk.t0bi.tickets.ui.event.list
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.androidannotations.annotations.*
 import tk.t0bi.tickets.R
-import tk.t0bi.tickets.TAG
 import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import tk.t0bi.tickets.databinding.FragmentEventListBinding
 import tk.t0bi.tickets.extensions.navigateSafe
@@ -90,9 +88,11 @@ class EventListFragment : Fragment(), EventSelectedCallback {
     }
 
     override fun eventSelected(event: EventListItemModel) {
-        findNavController().navigateSafe(R.id.action_eventListFragment__to_ticketEventOverviewFragment_, Bundle().apply {
-            putParcelable(TicketEventOverviewFragment.ARG_EVENT, event)
-        })
+        findNavController().navigateSafe(
+            R.id.action_eventListFragment__to_ticketEventOverviewFragment_,
+            Bundle().apply {
+                putParcelable(TicketEventOverviewFragment.ARG_EVENT, event)
+            })
     }
 
     override fun selectedEditEvent(event: EventListItemModel) {

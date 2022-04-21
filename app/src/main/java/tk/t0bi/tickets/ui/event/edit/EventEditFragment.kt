@@ -6,9 +6,7 @@ import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import org.androidannotations.annotations.*
 import tk.t0bi.tickets.R
 import tk.t0bi.tickets.data.repository.api.models.EventListItemModel

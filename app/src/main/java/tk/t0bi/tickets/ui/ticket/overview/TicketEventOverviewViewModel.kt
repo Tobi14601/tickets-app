@@ -13,7 +13,6 @@ import tk.t0bi.tickets.data.repository.api.models.EventListItemModel
 import tk.t0bi.tickets.data.repository.api.models.EventTicketsOverviewModel
 import tk.t0bi.tickets.data.repository.api.models.TicketModel
 import tk.t0bi.tickets.utils.Event
-import java.lang.Exception
 
 class TicketEventOverviewViewModel : ViewModel() {
 
@@ -61,7 +60,7 @@ class TicketEventOverviewViewModel : ViewModel() {
             isLoading.set(false)
             entryLiveData.value = Event(it)
             loadEvent()
-        } .failUi {
+        }.failUi {
             Log.e(TAG, "handleScannedBarcode: Error checking entry", it)
             isLoading.set(false)
             errorLiveData.value = Event(it)

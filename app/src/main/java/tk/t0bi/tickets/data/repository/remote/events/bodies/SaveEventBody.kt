@@ -14,7 +14,11 @@ data class SaveEventDto(
     @SerializedName("city")
     val city: SaveEventCityDto
 ) {
-    constructor(model: SaveEventModel) : this(model.title, model.date, SaveEventCityDto(model.city, model.postCode, model.country))
+    constructor(model: SaveEventModel) : this(
+        model.title,
+        model.date,
+        SaveEventCityDto(model.city, model.postCode, model.country)
+    )
 }
 
 data class SaveEventCityDto(

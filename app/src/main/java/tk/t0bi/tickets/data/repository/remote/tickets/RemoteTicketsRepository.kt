@@ -9,7 +9,6 @@ import tk.t0bi.tickets.data.repository.api.models.SaveTicketResponse
 import tk.t0bi.tickets.data.repository.remote.RetrofitServiceLocator
 import tk.t0bi.tickets.data.repository.remote.tickets.bodies.SaveTicketDto
 import tk.t0bi.tickets.extensions.handleMapped
-import java.lang.Exception
 
 class RemoteTicketsRepository : TicketsRepository {
 
@@ -20,7 +19,11 @@ class RemoteTicketsRepository : TicketsRepository {
             if (model.ticketId == null) {
                 RetrofitServiceLocator.ticketsRepository.createTicket(model.eventId, SaveTicketDto(model)).execute()
             } else {
-                RetrofitServiceLocator.ticketsRepository.updateTicket(model.eventId, model.ticketId, SaveTicketDto(model)).execute()
+                RetrofitServiceLocator.ticketsRepository.updateTicket(
+                    model.eventId,
+                    model.ticketId,
+                    SaveTicketDto(model)
+                ).execute()
             }
         }.handleMapped(deferred) {
             it.toSaveTicketResponse()

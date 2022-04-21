@@ -4,7 +4,7 @@ import nl.komponents.kovenant.Dispatcher
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class CachedDispatcher: Dispatcher {
+class CachedDispatcher : Dispatcher {
 
     companion object {
 
